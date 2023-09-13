@@ -23,23 +23,28 @@
       return {
         $template: '#shorten-space',
         long_url: '',
+        short_url: '',
         async shortenUrl() {
-          console.log('trying to make api call to bit.ly')
+          this.short_url = "shortening using bitly..."
 
           try {
-            let res = await client.request.invokeTemplate("shortenLink", {
+            let { response } = await client.request.invokeTemplate("shortenLink", {
               body: JSON.stringify({
-                long_url: this.long_url
+                long_url: this.long_url,
+                cache: true
               })
             });
-            console.log(res);
+            let shortenedObj = JSON.parse(response);
+            this.short_url = shortenedObj.link;
           } catch (error) {
+            this.short_url = "shortening failed..."
             console.error('this went wrong', error);
           }
         }
       }
     }
 
+    
     createApp({
       Shorten
     }).mount()
@@ -50,6 +55,7 @@
     <input type="text" name="long-url" v-model="long_url" placeholder="https://www.example.com"
       aria-label="long url text">
     <button @click="shortenUrl()">shorten</button>
+    <pre>{{short_url}}</pre>
   </template>
 
   <div v-scope="Shorten()" id="shorten-space"></div>
