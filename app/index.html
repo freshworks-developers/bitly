@@ -28,6 +28,29 @@
         $template: '#shorten-space',
         long_url: '',
         short_url: '',
+        last5Urls: [],
+        async storeUrls() {
+          try {
+            let index = 0;
+            await client.db.set("last5Urls", {
+              index,
+              short_url: this.short_url,
+            })
+            index++;
+            return;
+          } catch (error) {
+            console.error('Storing into platform KV store failed', error);
+          }
+        },
+        async listUrls() {
+          try {
+            let res = await client.db.get("last5Urls");
+            this.last5Urls.push(res);
+            console.log(this.last5Urls);
+          } catch (error) {
+            console.error('Retrieval from the platform KV store failed', error);
+          }
+        },
         async shortenUrl() {
           this.short_url = "shortening using bitly..."
 
@@ -40,6 +63,7 @@
             });
             let shortenedObj = JSON.parse(response);
             this.short_url = shortenedObj.link;
+            this.storeUrls();
           } catch (error) {
             this.short_url = "shortening failed..."
             console.error('this went wrong', error);
@@ -50,8 +74,7 @@
 
 
     createApp({
-      Shorten,
-      List
+      Shorten
     }).mount()
   </script>
 
@@ -61,9 +84,12 @@
       <fw-input type="url" required="true" name="long-url" v-model="long_url" placeholder="https://www.example.com"
         aria-label="long url text"></fw-input>
       <fw-button @click="shortenUrl()" color="secondary" size="normal">Shrink</fw-button>
+      <fw-button @click="listUrls()" color="link" size="normal">List last 5 shortened URLs</fw-button>
     </div>
     <pre>{{short_url}}</pre>
-    <i>{{info}}</i>
+    <ul class="url-list">
+      <li v-for="item in last5Urls" :key="item.index">{{item.short_url}}</li>
+    </ul>
 
     <style>
       .inputbox {
@@ -74,6 +100,16 @@
 
       fw-input {
         width: 75%
+      }
+
+      li {
+        list-style: none;
+        font-family: 'Courier New';
+        color: #0077cc;
+      }
+
+      li:hover {
+        text-decoration: underline;
       }
     </style>
   </template>
