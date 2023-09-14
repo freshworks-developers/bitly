@@ -8,6 +8,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script async src="{{{appclient}}}"></script>
+  <script async type="module"
+    src="https://cdn.jsdelivr.net/npm/@freshworks/crayons@v4/dist/crayons/crayons.esm.js"></script>
+  <script async nomodule src="https://cdn.jsdelivr.net/npm/@freshworks/crayons@v4/dist/crayons/crayons.js"></script>
+
   <link rel="stylesheet" type="text/css" href="styles/style.css" />
 </head>
 
@@ -46,19 +50,40 @@
 
 
     createApp({
-      Shorten
+      Shorten,
+      List
     }).mount()
   </script>
 
   <template id="shorten-space">
-    <label for="long-url">Long URL</label>
-    <input type="text" name="long-url" v-model="long_url" placeholder="https://www.example.com"
-      aria-label="long url text">
-    <button @click="shortenUrl()">shorten</button>
+    <div class="inputbox">
+      <p>Enter URL to shorten</p>
+      <fw-input type="url" required="true" name="long-url" v-model="long_url" placeholder="https://www.example.com"
+        aria-label="long url text"></fw-input>
+      <fw-button @click="shortenUrl()" color="secondary" size="normal">Shrink</fw-button>
+    </div>
     <pre>{{short_url}}</pre>
+    <i>{{info}}</i>
+
+    <style>
+      .inputbox {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-around;
+      }
+
+      fw-input {
+        width: 75%
+      }
+    </style>
   </template>
 
-  <div v-scope="Shorten()" id="shorten-space"></div>
+  <template id="#list-space">
+
+  </template>
+
+  <div v-scope="Shorten()"></div>
+  <div v-scope=""></div>
 
 </body>
 
@@ -74,6 +99,5 @@
     box-sizing: inherit;
   }
 </style>
-
 
 </html>
