@@ -3,7 +3,7 @@
   "product": {
     "freshdesk": {
       "location": {
-        "ticket_sidebar": {
+        "cti_global_sidebar": {
           "url": "index.html",
           "icon": "styles/images/icon.svg"
         }
