@@ -1,20 +1,38 @@
 {
-  "platform-version": "2.3",
-  "product": {
-    "freshdesk": {
+  "platform-version": "3.0",
+  "modules": {
+    "common": {
+      "requests": {
+        "shortenLink": {}
+      }
+    },
+    "support_ticket": {
       "location": {
-        "cti_global_sidebar": {
+        "ticket_sidebar": {
           "url": "index.html",
           "icon": "styles/images/icon.svg"
         }
-      },
-      "requests": {
-        "shortenLink": {}
+      }
+    },
+    "support_contact": {
+      "location": {
+        "contact_sidebar": {
+          "url": "index.html",
+          "icon": "styles/images/icon.svg"
+        }
+      }
+    },
+    "service_ticket": {
+      "location": {
+        "ticket_sidebar": {
+          "url": "index.html",
+          "icon": "styles/images/icon.svg"
+        }
       }
     }
   },
   "engines": {
     "node": "18.16.1",
-    "fdk": "9.0.4"
+    "fdk": "9.1.0"
   }
 }
