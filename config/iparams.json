@@ -4,6 +4,7 @@
     "description": "Get it from https://app.bitly.com/settings/api/",
     "type": "text",
     "secure": true,
-    "required": true
+    "required": true,
+    "modules": ["support_ticket"]
   }
 }
